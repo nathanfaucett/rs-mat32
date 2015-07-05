@@ -3,6 +3,13 @@ name = "mat32"
 version = "0.1.0"
 authors = ["nathanfaucett <nathanfaucett@gmail.com>"]
 
+keywords = ["mat32", "matrix", "3x2"]
+description = "rust matrix 3x2 functions"
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/nathanfaucett/rs-mat32.git"
+homepage = "https://github.com/nathanfaucett/rs-mat32"
+
 [dependencies.num]
 git = "https://github.com/nathanfaucett/rs-num.git"
 
