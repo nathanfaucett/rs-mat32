@@ -44,17 +44,10 @@ fn test_determinant() {
 
 #[inline(always)]
 pub fn transpose<T: Num>(out: &mut [T; 6], a: [T; 6]) -> &mut [T; 6] {
-    if *out == a {
-        let tmp = a[1];
-        out[1] = a[2];
-        out[2] = tmp;
-    } else {
-        out[0] = a[0];
-        out[1] = a[2];
-        out[2] = a[1];
-        out[3] = a[3];
-    }
-
+    out[0] = a[0];
+    out[1] = a[2];
+    out[2] = a[1];
+    out[3] = a[3];
     out
 }
 #[test]
