@@ -1,6 +1,8 @@
 extern crate vec2;
 
+
 use num::Num;
+
 
 #[inline(always)]
 pub fn compose<T: Num>(out: &mut [T; 6], position: [T; 3], scale: [T; 3], rotation: T) -> &mut [T; 6] {
