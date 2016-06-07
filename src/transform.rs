@@ -5,7 +5,7 @@ use num::Num;
 
 
 #[inline(always)]
-pub fn compose<T: Num>(out: &mut [T; 6], position: [T; 3], scale: [T; 3], rotation: T) -> &mut [T; 6] {
+pub fn compose<T: Num>(out: &mut [T; 6], position: [T; 2], scale: [T; 2], rotation: T) -> &mut [T; 6] {
     let sx = scale[0];
     let sy = scale[1];
     let c = rotation.cos();
@@ -21,7 +21,7 @@ pub fn compose<T: Num>(out: &mut [T; 6], position: [T; 3], scale: [T; 3], rotati
 }
 
 #[inline(always)]
-pub fn decompose<T: Num>(out: [T; 6], position: &mut [T; 3], scale: &mut [T; 3]) -> T {
+pub fn decompose<T: Num>(out: [T; 6], position: &mut [T; 2], scale: &mut [T; 2]) -> T {
     let m11 = out[0];
     let m12 = out[1];
     let sx = vec2::length_values(m11, m12);
@@ -37,7 +37,7 @@ pub fn decompose<T: Num>(out: [T; 6], position: &mut [T; 3], scale: &mut [T; 3])
 }
 
 #[inline(always)]
-pub fn look_at<T: Num>(out: &mut [T; 6], eye: [T; 3], target: [T; 3]) -> &mut [T; 6] {
+pub fn look_at<T: Num>(out: &mut [T; 6], eye: [T; 2], target: [T; 2]) -> &mut [T; 6] {
     let x = target[0] - eye[0];
     let y = target[1] - eye[1];
     let a = y.atan2(x) - T::half_pi();
@@ -69,14 +69,14 @@ pub fn get_rotation<T: Num>(out: [T; 6]) -> T {
 }
 
 #[inline(always)]
-pub fn set_position<T: Num>(out: &mut [T; 6], v: [T; 3]) -> &mut [T; 6] {
+pub fn set_position<T: Num>(out: &mut [T; 6], v: [T; 2]) -> &mut [T; 6] {
     out[4] = v[0];
     out[5] = v[1];
     out
 }
 
 #[inline(always)]
-pub fn get_position<T: Num>(out: [T; 6], v: &mut [T; 3]) -> &mut [T; 3] {
+pub fn get_position<T: Num>(out: [T; 6], v: &mut [T; 2]) -> &mut [T; 2] {
     v[0] = out[4];
     v[1] = out[5];
     v
@@ -110,7 +110,7 @@ pub fn extract_rotation<T: Num>(out: &mut [T; 6], a: [T; 6]) -> &mut [T; 6] {
 }
 
 #[inline(always)]
-pub fn translate<T: Num>(out: &mut [T; 6], a: [T; 6], v: [T; 3]) -> &mut [T; 6] {
+pub fn translate<T: Num>(out: &mut [T; 6], a: [T; 6], v: [T; 2]) -> &mut [T; 6] {
     out[4] = a[0] * v[0] + a[2] * v[1] + a[4];
     out[5] = a[1] * v[0] + a[3] * v[1] + a[5];
     out
@@ -133,7 +133,7 @@ pub fn rotate<T: Num>(out: &mut [T; 6], a: [T; 6], rotation: T) -> &mut [T; 6] {
 }
 
 #[inline(always)]
-pub fn scale<T: Num>(out: &mut [T; 6], a: [T; 6], v: [T; 3]) -> &mut [T; 6] {
+pub fn scale<T: Num>(out: &mut [T; 6], a: [T; 6], v: [T; 2]) -> &mut [T; 6] {
     let x = v[0];
     let y = v[1];
 
