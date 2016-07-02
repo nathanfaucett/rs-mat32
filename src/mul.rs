@@ -2,7 +2,7 @@ use num::Num;
 
 
 #[inline(always)]
-pub fn mul<T: Num>(out: &mut [T; 6], a: [T; 6], b: [T; 6]) ->  &mut [T; 6] {
+pub fn mul<'a, 'b, T: Num>(out: &'a mut [T; 6], a: &'b [T; 6], b: &'b [T; 6]) ->  &'a mut [T; 6] {
     let a11 = a[0];
     let a12 = a[2];
     let a13 = a[4];
@@ -30,12 +30,12 @@ pub fn mul<T: Num>(out: &mut [T; 6], a: [T; 6], b: [T; 6]) ->  &mut [T; 6] {
 #[test]
 fn test_mul() {
     let mut v = [1, 0, 0, 1, 0, 0];
-    mul(&mut v, [1, 0, 0, 1, 0, 0], [1, 0, 0, 1, 0, 0]);
+    mul(&mut v, &[1, 0, 0, 1, 0, 0], &[1, 0, 0, 1, 0, 0]);
     assert!(v == [1, 0, 0, 1, 0, 0]);
 }
 
 #[inline(always)]
-pub fn smul<T: Num>(out: &mut [T; 6], a: [T; 6], s: T) ->  &mut [T; 6] {
+pub fn smul<'a, 'b, T: Num>(out: &'a mut [T; 6], a: &'b [T; 6], s: T) ->  &'a mut [T; 6] {
     out[0] = a[0] * s;
     out[1] = a[1] * s;
     out[2] = a[2] * s;
@@ -47,6 +47,6 @@ pub fn smul<T: Num>(out: &mut [T; 6], a: [T; 6], s: T) ->  &mut [T; 6] {
 #[test]
 fn test_smul() {
     let mut v = [0, 0, 0, 0, 0, 0];
-    smul(&mut v, [1, 0, 0, 1, 0, 0], 1);
+    smul(&mut v, &[1, 0, 0, 1, 0, 0], 1);
     assert!(v == [1, 0, 0, 1, 0, 0]);
 }

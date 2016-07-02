@@ -37,10 +37,10 @@ pub fn new_zero<T: Num>() -> [T; 6] {
 }
 
 #[inline(always)]
-pub fn clone<T: Num>(m: [T; 6]) -> [T; 6] {new(m[0], m[1], m[2], m[3], m[4], m[5])}
+pub fn clone<'b, T: Num>(m: &'b [T; 6]) -> [T; 6] {new(m[0], m[1], m[2], m[3], m[4], m[5])}
 
 #[inline(always)]
-pub fn copy<T: Num>(out: &mut [T; 6], a: [T; 6]) -> &mut [T; 6] {
+pub fn copy<'a, 'b, T: Num>(out: &'a mut [T; 6], a: &'b [T; 6]) -> &'a mut [T; 6] {
     out[0] = a[0];
     out[1] = a[1];
     out[2] = a[2];
@@ -52,6 +52,6 @@ pub fn copy<T: Num>(out: &mut [T; 6], a: [T; 6]) -> &mut [T; 6] {
 #[test]
 fn test_copy() {
     let mut v = [0, 0, 0, 0, 0, 0];
-    copy(&mut v, [1, 2, 3, 4, 5, 6]);
+    copy(&mut v, &[1, 2, 3, 4, 5, 6]);
     assert!(v == [1, 2, 3, 4, 5, 6]);
 }

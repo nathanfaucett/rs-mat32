@@ -2,7 +2,7 @@ use num::Num;
 
 
 #[inline(always)]
-pub fn set<T: Num>(out: &mut [T; 6], m11: T, m12: T, m13: T, m21: T, m22: T, m23: T) -> &mut [T; 6] {
+pub fn set<'a, 'b, T: Num>(out: &'a mut [T; 6], m11: T, m12: T, m13: T, m21: T, m22: T, m23: T) -> &'a mut [T; 6] {
     out[0] = m11; out[2] = m21; out[4] = m13;
     out[1] = m12; out[3] = m22; out[5] = m23;
     out
@@ -18,6 +18,6 @@ fn test_set() {
 }
 
 #[inline(always)]
-pub fn zero<T: Num>(out: &mut [T; 6]) -> &mut [T; 6] { set(out, T::zero(), T::zero(), T::zero(), T::zero(), T::zero(), T::zero()) }
+pub fn zero<'a, 'b, T: Num>(out: &'a mut [T; 6]) -> &'a mut [T; 6] { set(out, T::zero(), T::zero(), T::zero(), T::zero(), T::zero(), T::zero()) }
 #[inline(always)]
-pub fn identity<T: Num>(out: &mut [T; 6]) -> &mut [T; 6] { set(out, T::one(), T::zero(), T::zero(), T::zero(), T::one(), T::zero()) }
+pub fn identity<'a, 'b, T: Num>(out: &'a mut [T; 6]) -> &'a mut [T; 6] { set(out, T::one(), T::zero(), T::zero(), T::zero(), T::one(), T::zero()) }
