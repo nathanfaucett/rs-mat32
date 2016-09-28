@@ -40,6 +40,28 @@ pub fn new_zero<T: Num>() -> [T; 6] {
 pub fn clone<'b, T: Num>(m: &'b [T; 6]) -> [T; 6] {new(m[0], m[1], m[2], m[3], m[4], m[5])}
 
 #[inline(always)]
+pub fn from_mat2<'a, 'b, T: Num>(m: &'b [T; 4]) -> [T; 6] {
+    new(
+        m[0], m[2], T::zero(),
+        m[1], m[3], T::zero()
+    )
+}
+#[inline(always)]
+pub fn from_mat3<'a, 'b, T: Num>(m: &'b [T; 9]) -> [T; 6] {
+    new(
+        m[0], m[3], T::zero(),
+        m[1], m[4], T::zero()
+    )
+}
+#[inline(always)]
+pub fn from_mat4<'a, 'b, T: Num>(m: &'b [T; 16]) -> [T; 6] {
+    new(
+        m[0], m[4], m[12],
+        m[1], m[5], m[13]
+    )
+}
+
+#[inline(always)]
 pub fn copy<'a, 'b, T: Num>(out: &'a mut [T; 6], a: &'b [T; 6]) -> &'a mut [T; 6] {
     out[0] = a[0];
     out[1] = a[1];
