@@ -12,6 +12,8 @@ homepage = "https://github.com/nathanfaucett/rs-mat32"
 
 [dependencies.num]
 git = "https://github.com/nathanfaucett/rs-num.git"
+[dependencies.approx]
+git = "https://github.com/nathanfaucett/rs-approx.git"
 
 [dependencies.vec2]
 git = "https://github.com/nathanfaucett/rs-vec2.git"

@@ -3,7 +3,11 @@ use num::Num;
 
 #[inline(always)]
 pub fn new<T: Num>(m11: T, m12: T, m13: T, m21: T, m22: T, m23: T) -> [T; 6] {
-    [m11, m12, m13, m21, m22, m23]
+    [
+        m11, m21,
+        m12, m22,
+        m13, m23
+    ]
 }
 #[inline(always)]
 pub fn create<T: Num>(m11: T, m12: T, m13: T, m21: T, m22: T, m23: T) -> [T; 6] {
@@ -16,8 +20,9 @@ fn test_new() {
         0, 1, 0
     );
     assert!(m == [
-        1, 0, 0,
-        0, 1, 0
+        1, 0,
+        0, 1,
+        0, 0
     ]);
 }
 
@@ -38,28 +43,6 @@ pub fn new_zero<T: Num>() -> [T; 6] {
 
 #[inline(always)]
 pub fn clone<'b, T: Num>(m: &'b [T; 6]) -> [T; 6] {new(m[0], m[1], m[2], m[3], m[4], m[5])}
-
-#[inline(always)]
-pub fn from_mat2<'a, 'b, T: Num>(m: &'b [T; 4]) -> [T; 6] {
-    new(
-        m[0], m[2], T::zero(),
-        m[1], m[3], T::zero()
-    )
-}
-#[inline(always)]
-pub fn from_mat3<'a, 'b, T: Num>(m: &'b [T; 9]) -> [T; 6] {
-    new(
-        m[0], m[3], T::zero(),
-        m[1], m[4], T::zero()
-    )
-}
-#[inline(always)]
-pub fn from_mat4<'a, 'b, T: Num>(m: &'b [T; 16]) -> [T; 6] {
-    new(
-        m[0], m[4], m[12],
-        m[1], m[5], m[13]
-    )
-}
 
 #[inline(always)]
 pub fn copy<'a, 'b, T: Num>(out: &'a mut [T; 6], a: &'b [T; 6]) -> &'a mut [T; 6] {

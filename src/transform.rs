@@ -1,6 +1,4 @@
-extern crate vec2;
-
-
+use vec2;
 use num::Num;
 
 
@@ -62,10 +60,31 @@ pub fn set_rotation<'a, 'b, T: Num>(out: &'a mut [T; 6], rotation: T) -> &'a mut
     out[3] = c;
     out
 }
+#[test]
+fn test_set_rotation() {
+    use core::f32;
+    use create;
+    use misc;
+
+    let mut m = create::new_identity::<f32>();
+    set_rotation(&mut m, f32::consts::FRAC_PI_2);
+
+    assert!(misc::eq(&m, &[0f32, 1f32, -1f32, 0f32, 0f32, 0f32]));
+}
 
 #[inline(always)]
 pub fn get_rotation<'a, 'b, T: Num>(out: &'b [T; 6]) -> T {
     out[1].atan2(out[0])
+}
+#[test]
+fn test_get_rotation() {
+    use core::f32;
+    use create;
+
+    let mut m = create::new_identity::<f32>();
+    set_rotation(&mut m, f32::consts::FRAC_PI_2);
+
+    assert_eq!(get_rotation(&m), f32::consts::FRAC_PI_2);
 }
 
 #[inline(always)]
@@ -125,11 +144,24 @@ pub fn rotate<'a, 'b, T: Num>(out: &'a mut [T; 6], a: &'b [T; 6], rotation: T) -
     let c = rotation.cos();
     let s = rotation.sin();
 
-    out[0] = m11 * c + m12 * s;
-    out[1] = m11 * -s + m12 * c;
-    out[2] = m21 * c + m22 * s;
-    out[3] = m21 * -s + m22 * c;
+    out[0] = m11 * c + m12 * -s;
+    out[1] = m11 * s + m12 * c;
+    out[2] = m21 * c + m22 * -s;
+    out[3] = m21 * s + m22 * c;
     out
+}
+#[test]
+fn test_rotate() {
+    use core::f32;
+    use create;
+    use misc;
+
+    let mut m = create::new_identity::<f32>();
+    rotate(&mut m, &create::new_identity::<f32>(), f32::consts::FRAC_PI_2);
+
+    assert!(misc::eq(&m, &[
+        0f32, 1f32, -1f32, 0f32, 0f32, 0f32
+    ]));
 }
 
 #[inline(always)]
@@ -139,11 +171,10 @@ pub fn scale<'a, 'b, T: Num>(out: &'a mut [T; 6], a: &'b [T; 6], v: &'b [T; 2]) 
 
     out[0] = a[0] * x;
     out[1] = a[1] * x;
-    out[4] = a[4] * x;
 
     out[2] = a[2] * y;
     out[3] = a[3] * y;
-    out[5] = a[5] * y;
+
     out
 }
 
@@ -161,5 +192,6 @@ pub fn orthographic<'a, 'b, T: Num>(out: &'a mut [T; 6], left: T, right: T, top:
     out[3] = T::from_isize(2isize) / h;
     out[4] = -x;
     out[5] = -y;
+
     out
 }

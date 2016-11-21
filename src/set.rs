@@ -18,6 +18,35 @@ fn test_set() {
 }
 
 #[inline(always)]
-pub fn zero<'a, 'b, T: Num>(out: &'a mut [T; 6]) -> &'a mut [T; 6] { set(out, T::zero(), T::zero(), T::zero(), T::zero(), T::zero(), T::zero()) }
+pub fn zero<'a, 'b, T: Num>(out: &'a mut [T; 6]) -> &'a mut [T; 6] {
+    set(out, T::zero(), T::zero(), T::zero(), T::zero(), T::zero(), T::zero())
+}
 #[inline(always)]
-pub fn identity<'a, 'b, T: Num>(out: &'a mut [T; 6]) -> &'a mut [T; 6] { set(out, T::one(), T::zero(), T::zero(), T::zero(), T::one(), T::zero()) }
+pub fn identity<'a, 'b, T: Num>(out: &'a mut [T; 6]) -> &'a mut [T; 6] {
+    set(out, T::one(), T::zero(), T::zero(), T::zero(), T::one(), T::zero())
+}
+
+#[inline(always)]
+pub fn from_mat2<'a, 'b, T: Num>(out: &'a mut [T; 6], m: &'b [T; 4]) -> &'a mut [T; 6] {
+    set(
+        out,
+        m[0], m[2], T::zero(),
+        m[1], m[3], T::zero()
+    )
+}
+#[inline(always)]
+pub fn from_mat3<'a, 'b, T: Num>(out: &'a mut [T; 6], m: &'b [T; 9]) -> &'a mut [T; 6] {
+    set(
+        out,
+        m[0], m[3], T::zero(),
+        m[1], m[4], T::zero()
+    )
+}
+#[inline(always)]
+pub fn from_mat4<'a, 'b, T: Num>(out: &'a mut [T; 6], m: &'b [T; 16]) -> &'a mut [T; 6] {
+    set(
+        out,
+        m[0], m[4], T::zero(),
+        m[1], m[5], T::zero()
+    )
+}
