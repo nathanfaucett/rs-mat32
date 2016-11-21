@@ -179,7 +179,7 @@ pub fn scale<'a, 'b, T: Num>(out: &'a mut [T; 6], a: &'b [T; 6], v: &'b [T; 2]) 
 }
 
 #[inline(always)]
-pub fn orthographic<'a, 'b, T: Num>(out: &'a mut [T; 6], left: T, right: T, top: T, bottom: T) -> &'a mut [T; 6] {
+pub fn orthographic<'a, 'b, T: Num>(out: &'a mut [T; 6], top: T, right: T, bottom: T, left: T) -> &'a mut [T; 6] {
     let w = right - left;
     let h = top - bottom;
 
