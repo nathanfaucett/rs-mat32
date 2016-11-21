@@ -1,9 +1,9 @@
 use vec2;
-use num::Num;
+use num::{Signed, Unsigned};
 
 
 #[inline(always)]
-pub fn compose<'a, 'b, T: Num>(out: &'a mut [T; 6], position: &'b [T; 2], scale: &'b [T; 2], rotation: T) -> &'a mut [T; 6] {
+pub fn compose<'a, 'b, T: Signed>(out: &'a mut [T; 6], position: &'b [T; 2], scale: &'b [T; 2], rotation: T) -> &'a mut [T; 6] {
     let sx = scale[0];
     let sy = scale[1];
     let c = rotation.cos();
@@ -19,7 +19,7 @@ pub fn compose<'a, 'b, T: Num>(out: &'a mut [T; 6], position: &'b [T; 2], scale:
 }
 
 #[inline(always)]
-pub fn decompose<'a, 'b, T: Num>(out: &'b [T; 6], position: &'a mut [T; 2], scale: &'a mut [T; 2]) -> T {
+pub fn decompose<'a, 'b, T: Unsigned>(out: &'b [T; 6], position: &'a mut [T; 2], scale: &'a mut [T; 2]) -> T {
     let m11 = out[0];
     let m12 = out[1];
     let sx = vec2::length_values(m11, m12);
@@ -35,7 +35,7 @@ pub fn decompose<'a, 'b, T: Num>(out: &'b [T; 6], position: &'a mut [T; 2], scal
 }
 
 #[inline(always)]
-pub fn look_at<'a, 'b, T: Num>(out: &'a mut [T; 6], eye: &'b [T; 2], target: &'b [T; 2]) -> &'a mut [T; 6] {
+pub fn look_at<'a, 'b, T: Signed>(out: &'a mut [T; 6], eye: &'b [T; 2], target: &'b [T; 2]) -> &'a mut [T; 6] {
     let x = target[0] - eye[0];
     let y = target[1] - eye[1];
     let a = y.atan2(x) - T::half_pi();
@@ -50,7 +50,7 @@ pub fn look_at<'a, 'b, T: Num>(out: &'a mut [T; 6], eye: &'b [T; 2], target: &'b
 }
 
 #[inline(always)]
-pub fn set_rotation<'a, 'b, T: Num>(out: &'a mut [T; 6], rotation: T) -> &'a mut [T; 6] {
+pub fn set_rotation<'a, 'b, T: Signed>(out: &'a mut [T; 6], rotation: T) -> &'a mut [T; 6] {
     let c = rotation.cos();
     let s = rotation.sin();
 
@@ -73,7 +73,7 @@ fn test_set_rotation() {
 }
 
 #[inline(always)]
-pub fn get_rotation<'a, 'b, T: Num>(out: &'b [T; 6]) -> T {
+pub fn get_rotation<'a, 'b, T: Unsigned>(out: &'b [T; 6]) -> T {
     out[1].atan2(out[0])
 }
 #[test]
@@ -88,28 +88,28 @@ fn test_get_rotation() {
 }
 
 #[inline(always)]
-pub fn set_position<'a, 'b, T: Num>(out: &'a mut [T; 6], v: &'b [T; 2]) -> &'a mut [T; 6] {
+pub fn set_position<'a, 'b, T: Unsigned>(out: &'a mut [T; 6], v: &'b [T; 2]) -> &'a mut [T; 6] {
     out[4] = v[0];
     out[5] = v[1];
     out
 }
 
 #[inline(always)]
-pub fn get_position<'a, 'b, T: Num>(out: &'b [T; 6], v: &'a mut [T; 2]) -> &'a mut [T; 2] {
+pub fn get_position<'a, 'b, T: Unsigned>(out: &'b [T; 6], v: &'a mut [T; 2]) -> &'a mut [T; 2] {
     v[0] = out[4];
     v[1] = out[5];
     v
 }
 
 #[inline(always)]
-pub fn extract_position<'a, 'b, T: Num>(out: &'a mut [T; 6], a: &'b [T; 6]) -> &'a mut [T; 6] {
+pub fn extract_position<'a, 'b, T: Unsigned>(out: &'a mut [T; 6], a: &'b [T; 6]) -> &'a mut [T; 6] {
     out[4] = a[4];
     out[5] = a[5];
     out
 }
 
 #[inline(always)]
-pub fn extract_rotation<'a, 'b, T: Num>(out: &'a mut [T; 6], a: &'b [T; 6]) -> &'a mut [T; 6] {
+pub fn extract_rotation<'a, 'b, T: Unsigned>(out: &'a mut [T; 6], a: &'b [T; 6]) -> &'a mut [T; 6] {
     let m11 = a[0];
     let m12 = a[2];
     let m21 = a[1];
@@ -129,14 +129,14 @@ pub fn extract_rotation<'a, 'b, T: Num>(out: &'a mut [T; 6], a: &'b [T; 6]) -> &
 }
 
 #[inline(always)]
-pub fn translate<'a, 'b, T: Num>(out: &'a mut [T; 6], a: &'b [T; 6], v: &'b [T; 2]) -> &'a mut [T; 6] {
+pub fn translate<'a, 'b, T: Unsigned>(out: &'a mut [T; 6], a: &'b [T; 6], v: &'b [T; 2]) -> &'a mut [T; 6] {
     out[4] = a[0] * v[0] + a[2] * v[1] + a[4];
     out[5] = a[1] * v[0] + a[3] * v[1] + a[5];
     out
 }
 
 #[inline(always)]
-pub fn rotate<'a, 'b, T: Num>(out: &'a mut [T; 6], a: &'b [T; 6], rotation: T) -> &'a mut [T; 6] {
+pub fn rotate<'a, 'b, T: Signed>(out: &'a mut [T; 6], a: &'b [T; 6], rotation: T) -> &'a mut [T; 6] {
     let m11 = a[0];
     let m12 = a[2];
     let m21 = a[1];
@@ -165,7 +165,7 @@ fn test_rotate() {
 }
 
 #[inline(always)]
-pub fn scale<'a, 'b, T: Num>(out: &'a mut [T; 6], a: &'b [T; 6], v: &'b [T; 2]) -> &'a mut [T; 6] {
+pub fn scale<'a, 'b, T: Unsigned>(out: &'a mut [T; 6], a: &'b [T; 6], v: &'b [T; 2]) -> &'a mut [T; 6] {
     let x = v[0];
     let y = v[1];
 
@@ -179,7 +179,7 @@ pub fn scale<'a, 'b, T: Num>(out: &'a mut [T; 6], a: &'b [T; 6], v: &'b [T; 2]) 
 }
 
 #[inline(always)]
-pub fn orthographic<'a, 'b, T: Num>(out: &'a mut [T; 6], top: T, right: T, bottom: T, left: T) -> &'a mut [T; 6] {
+pub fn orthographic<'a, 'b, T: Signed>(out: &'a mut [T; 6], top: T, right: T, bottom: T, left: T) -> &'a mut [T; 6] {
     let w = right - left;
     let h = top - bottom;
 

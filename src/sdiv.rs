@@ -1,8 +1,8 @@
-use num::Num;
+use num::Unsigned;
 
 
 #[inline(always)]
-pub fn sdiv<'a, 'b, T: Num>(out: &'a mut [T; 6], a: &'b [T; 6], s: T) ->  &'a mut [T; 6] {
+pub fn sdiv<'a, 'b, T: Unsigned>(out: &'a mut [T; 6], a: &'b [T; 6], s: T) ->  &'a mut [T; 6] {
     let not_zero = s != T::zero();
     out[0] = if not_zero {a[0] / s} else  {T::zero()};
     out[1] = if not_zero {a[1] / s} else  {T::zero()};
