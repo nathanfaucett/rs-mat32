@@ -1,3 +1,5 @@
+use core::f64::consts::FRAC_PI_2;
+
 use vec2;
 use num::{Signed, Unsigned};
 
@@ -38,7 +40,7 @@ pub fn decompose<'a, 'b, T: Unsigned>(out: &'b [T; 6], position: &'a mut [T; 2],
 pub fn look_at<'a, 'b, T: Signed>(out: &'a mut [T; 6], eye: &'b [T; 2], target: &'b [T; 2]) -> &'a mut [T; 6] {
     let x = target[0] - eye[0];
     let y = target[1] - eye[1];
-    let a = y.atan2(x) - T::half_pi();
+    let a = y.atan2(x) - T::from_f64(FRAC_PI_2);
     let c = a.cos();
     let s = a.sin();
 
