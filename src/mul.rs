@@ -1,8 +1,8 @@
-use num::Unsigned;
+use num::Num;
 
 
-#[inline(always)]
-pub fn mul<'a, 'b, T: Unsigned>(out: &'a mut [T; 6], a: &'b [T; 6], b: &'b [T; 6]) ->  &'a mut [T; 6] {
+#[inline]
+pub fn mul<'a, 'b, T: Num>(out: &'a mut [T; 6], a: &'b [T; 6], b: &'b [T; 6]) ->  &'a mut [T; 6] {
     let a11 = a[0];
     let a12 = a[2];
     let a13 = a[4];
@@ -34,8 +34,8 @@ fn test_mul() {
     assert!(v == [1, 0, 0, 1, 0, 0]);
 }
 
-#[inline(always)]
-pub fn smul<'a, 'b, T: Unsigned>(out: &'a mut [T; 6], a: &'b [T; 6], s: T) ->  &'a mut [T; 6] {
+#[inline]
+pub fn smul<'a, 'b, T: Num>(out: &'a mut [T; 6], a: &'b [T; 6], s: T) ->  &'a mut [T; 6] {
     out[0] = a[0] * s;
     out[1] = a[1] * s;
     out[2] = a[2] * s;

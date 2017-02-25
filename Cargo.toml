@@ -10,8 +10,8 @@ readme = "README.md"
 repository = "https://github.com/nathanfaucett/rs-mat32.git"
 homepage = "https://github.com/nathanfaucett/rs-mat32"
 
-[dependencies.num]
-git = "https://github.com/nathanfaucett/rs-num.git"
-
-[dependencies.vec2]
-git = "https://github.com/nathanfaucett/rs-vec2.git"
+[dependencies]
+approx_eq = { git = "https://github.com/nathanfaucett/rs-approx_eq.git" }
+num = { git = "https://github.com/nathanfaucett/rs-num.git" }
+signed = { git = "https://github.com/nathanfaucett/rs-signed.git" }
+vec2 = { git = "https://github.com/nathanfaucett/rs-vec2.git" }
