@@ -6,7 +6,7 @@ use set::identity;
 
 
 #[inline]
-pub fn inverse<'a, 'b, T: Signed>(out: &'a mut [T; 6], a: &'b [T; 6]) -> &'a mut [T; 6] {
+pub fn inverse<'a, 'b, T: Copy + Signed>(out: &'a mut [T; 6], a: &'b [T; 6]) -> &'a mut [T; 6] {
     let m11 = a[0];
     let m12 = a[2];
     let m13 = a[4];
@@ -37,7 +37,7 @@ fn test_inverse() {
 }
 
 #[inline]
-pub fn determinant<'a, 'b, T: Num>(out: &'b [T; 6]) -> T {
+pub fn determinant<'a, 'b, T: Copy + Num>(out: &'b [T; 6]) -> T {
     out[0] * out[3] - out[2] * out[1]
 }
 #[test]
@@ -46,7 +46,7 @@ fn test_determinant() {
 }
 
 #[inline]
-pub fn transpose<'a, 'b, T: Num>(out: &'a mut [T; 6], a: &'b [T; 6]) -> &'a mut [T; 6] {
+pub fn transpose<'a, 'b, T: Copy + Num>(out: &'a mut [T; 6], a: &'b [T; 6]) -> &'a mut [T; 6] {
     out[0] = a[0];
     out[1] = a[2];
     out[2] = a[1];
@@ -62,18 +62,18 @@ fn test_transpose() {
 
 
 #[inline]
-pub fn eq<'a, T: Num + ApproxEq>(a: &'a [T; 6], b: &'a [T; 6]) -> bool {
+pub fn eq<'a, T: Copy + Num + ApproxEq>(a: &'a [T; 6], b: &'a [T; 6]) -> bool {
     !ne(a, b)
 }
 
 #[inline]
-pub fn ne<'a, T: Num + ApproxEq>(a: &'a [T; 6], b: &'a [T; 6]) -> bool {
-    !a[0].approx_eq(b[0]) ||
-    !a[1].approx_eq(b[1]) ||
-    !a[2].approx_eq(b[2]) ||
-    !a[3].approx_eq(b[3]) ||
-    !a[4].approx_eq(b[4]) ||
-    !a[5].approx_eq(b[5])
+pub fn ne<'a, T: Copy + Num + ApproxEq>(a: &'a [T; 6], b: &'a [T; 6]) -> bool {
+    !a[0].approx_eq(&b[0]) ||
+    !a[1].approx_eq(&b[1]) ||
+    !a[2].approx_eq(&b[2]) ||
+    !a[3].approx_eq(&b[3]) ||
+    !a[4].approx_eq(&b[4]) ||
+    !a[5].approx_eq(&b[5])
 }
 #[test]
 fn test_ne() {
